@@ -294,7 +294,8 @@ def reset_round():
 async def main():
     state = reset_round()
     running = True
-    touch_controls = detect_touch_device()
+    # Always show the on-screen controls on both desktop and mobile.
+    touch_controls = True
     active_touch_directions = set()
     touch_fingers = {}
     mouse_directions = set()
@@ -308,7 +309,6 @@ async def main():
                 running = False
 
             elif event.type == pygame.FINGERDOWN or event.type == pygame.FINGERMOTION:
-                touch_controls = True  # Also supports browsers with imperfect device detection.
                 px, py = touch_position_from_event(event)
                 if state["game_over"]:
                     if event.type == pygame.FINGERDOWN and restart_button.collidepoint(px, py):
